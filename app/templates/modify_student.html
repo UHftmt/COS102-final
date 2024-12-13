@@ -1,0 +1,24 @@
+<!-- modify.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Management System</title>
+</head>
+<body>
+    <h2>Modify Student Information</h2>
+    <div>
+        <!-- Your code here -->
+        {{ student }}
+        <form action="/modify" method="post">
+            id: <input type="text" name="id" value="{{ student.id }}">
+            <br />
+            name: <input type="text" name="name" value="{{ student.name }}">
+            <br />
+            age: <input type="text" name="age" value="{{ student.age }}">
+            <br />
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+</html>

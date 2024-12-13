@@ -1,0 +1,41 @@
+<!-- display.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Management System</title>
+</head>
+<body>
+    <h2>Display All Students</h2>
+    <div>
+        <!-- Your code here -->
+        <table style="border: 1px solid">
+            <tr>
+                <th>Student ID</th>
+                <th>Student Name</th>
+                <th>Student Age</th>
+                <th>Action</th>
+            </tr>
+            {% for s in students %}
+                <tr>
+                    <td>{{ s.id }}</td>
+                    <td>{{ s.name }}</td>
+                    <td>{{ s.age }}</td>
+                    <td>
+                        <form action="delete" method="post">
+                            <input type="hidden" name="id" value="{{ s.id }}">
+                            <input type="submit" value="Delete">
+                        </form>
+                        <form action="modify" method="get">
+                            <input type="hidden" name="id" value="{{ s.id }}">
+                            <input type="submit" value="Modify">
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+
+    </div>
+</body>
+</html>
