@@ -8,25 +8,29 @@
 <body>
     <h2>Display All Students</h2>
     <div>
-        <!-- Your code here -->
         <table style="border: 1px solid">
             <tr>
                 <th>Student ID</th>
                 <th>Student Name</th>
                 <th>Student Age</th>
+                <th>Student Major</th>
+                <th>Student Gender</th>
                 <th>Action</th>
             </tr>
             {% for s in students %}
                 <tr>
-                    <td>{{ s.id }}</td>
-                    <td>{{ s.name }}</td>
-                    <td>{{ s.age }}</td>
+                    <td>{{ s.ID }}</td>
+                    <td>{{ s.Name }}</td>
+                    <td>{{ s.Age }}</td>
+                    <td>{{ s.Major }}</td>
+                    <td>{{ s.Gender }}</td>
+
                     <td>
-                        <form action="delete" method="post">
+                        <form action="{{ url_for('delete_student') }}" method="post">
                             <input type="hidden" name="id" value="{{ s.id }}">
                             <input type="submit" value="Delete">
                         </form>
-                        <form action="modify" method="get">
+                        <form action="{{ url_for('modify_student') }}" method="get">
                             <input type="hidden" name="id" value="{{ s.id }}">
                             <input type="submit" value="Modify">
                         </form>
@@ -35,6 +39,7 @@
             {% endfor %}
         </table>
 
+        <a href="{{ url_for('home') }}"><button type="button">Home</button> </a>
 
     </div>
 </body>

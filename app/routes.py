@@ -9,15 +9,44 @@ def register_routes(app):
 
     @app.route('/add', methods=['GET', 'POST'])
     def add_student():
+
+        msg = ""
+
         if request.method == 'POST':
-            # Extract form data and add new student
-            return redirect(url_for('display_students'))
-        return render_template('add_student.html')
+
+            id = request.form["id"]
+            name = request.form["name"]
+            age = request.form["age"]
+            major = request.form["major"]
+            gender = request.form["gender"]
+
+            student = [id,name,age,major,gender]
+
+            signal = StudentManager().add_student(student)
+
+            if signal == False:
+                msg = f"Student(ID:{id}) is exist"
+            else:
+                return redirect(url_for('display_students'))
+            
+        return render_template('add_student.html', msg=msg)
 
     @app.route('/search', methods=['GET', 'POST'])
     def search_student():
-        # Handle search and display results
-        return render_template('search_student.html')
+        
+        msg = ""
+        search_term = []
+
+        if request.method == 'POST':
+
+            id = request.form("id")
+            name = request.form("name")
+
+            search_term = [id,name]
+
+        student_list = StudentManager().search_student(search_term)
+
+        return render_template('search_student.html', msg = msg, student_list=student_list)
 
     @app.route('/modify', methods=['GET', 'POST'])
     def modify_student():

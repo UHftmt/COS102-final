@@ -8,7 +8,27 @@
 <body>
     <h2>Add Student Information</h2>
     <div>
-        <!-- Your code here -->
+        <form action="{{ url_for('add_student') }}" method="post">
+
+            <input type="text" id="id" name="id" placeholder="Type ID here" required><br>
+            <input type="text" id="name" name="name" placeholder="Type name here" required><br>
+            <input type="text" id="age" name="age" placeholder="Type age here" required><br>
+            <input type="text" id="major" name="major" placeholder="Type major here" required><br>
+
+            <p>
+                <input type="radio" id="male" name="gender" value="Male" required>
+                <label for="male">Male</label>
+                <input type="radio" id="female" name="gender" value="Female" required>
+                <label for="female">Female</label>
+            </p>
+
+            <p id="msg">{{msg}}</p>
+            <button type="submit" id="submit">Submit</button>
+            
+            <a href="{{ url_for('home') }}"><button type="button">Home</button> </a>
+
+        </form>
+
     </div>
 </body>
 </html>
