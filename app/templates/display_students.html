@@ -27,17 +27,20 @@
 
                     <td>
                         <form action="{{ url_for('delete_student') }}" method="post">
-                            <input type="hidden" name="id" value="{{ s.id }}">
+                            <input type="hidden" name="id" value="{{ s.ID }}">
                             <input type="submit" value="Delete">
                         </form>
                         <form action="{{ url_for('modify_student') }}" method="get">
-                            <input type="hidden" name="id" value="{{ s.id }}">
+                            <input type="hidden" name="id" value="{{ s.ID }}">
                             <input type="submit" value="Modify">
                         </form>
                     </td>
                 </tr>
             {% endfor %}
+
         </table>
+
+        <p id="msg">Message : {{ msg }}</p>
 
         <a href="{{ url_for('home') }}"><button type="button">Home</button> </a>
 

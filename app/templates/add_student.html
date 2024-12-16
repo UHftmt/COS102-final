@@ -13,13 +13,24 @@
             <input type="text" id="id" name="id" placeholder="Type ID here" required><br>
             <input type="text" id="name" name="name" placeholder="Type name here" required><br>
             <input type="text" id="age" name="age" placeholder="Type age here" required><br>
-            <input type="text" id="major" name="major" placeholder="Type major here" required><br>
+            <p>
+                <label for="major">Major:</label>
+                <select id="major" name="major">
+                    <option value="">Select Major</option>
+                    <option value="Computer Science">Computer Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Physical">Physical</option>
+                    <option value="Art">Art</option>
+                </select>
+            </p>
 
             <p>
                 <input type="radio" id="male" name="gender" value="Male" required>
                 <label for="male">Male</label>
                 <input type="radio" id="female" name="gender" value="Female" required>
                 <label for="female">Female</label>
+                <input type="radio" id="non-binary" name="gender" value="non-binary" required>
+                <label for="female">Non-binary</label>
             </p>
 
             <p id="msg">{{msg}}</p>

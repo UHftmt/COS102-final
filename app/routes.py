@@ -35,16 +35,19 @@ def register_routes(app):
     def search_student():
         
         msg = ""
-        search_term = []
+        student_list = []
 
         if request.method == 'POST':
 
-            id = request.form("id")
-            name = request.form("name")
+            id = request.form.get("id","").lstrip()
+            name = request.form.get("name","").lstrip()
 
-            search_term = [id,name]
-
-        student_list = StudentManager().search_student(search_term)
+            if id or name:
+                student_list = StudentManager().search_student(id,name)
+                if not student_list:
+                    msg = "Student not found"
+            else:
+                msg = "Please provide at least one of the student's information"
 
         return render_template('search_student.html', msg = msg, student_list=student_list)
 
@@ -53,27 +56,54 @@ def register_routes(app):
         # Modify student information if found
         # If submit by Get method: return student information
         # If submit by Post method: overwrite student information
+        student = None
+        msg = ""
+
         if request.method == 'GET':
-            # when submit method is GET, use args, others is same
-            submitted = request.args
-            print(submitted)
-            print(submitted['id']) # 1
-            student = {"id":1, "name":"John", "age":20}
+            student_id = request.args.get("id")
+            students = StudentManager().search_student(student_id,None)
+            if students:
+                student = students[0]
+            else:
+                msg = "Error"
+
             return render_template('modify_student.html', student=student)
+        
         elif request.method == 'POST':
-            return redirect(url_for('display_students'))
+            student_id = request.form["id"]
+            name = request.form["name"]
+            age = request.form["age"]
+            major = request.form["major"]
+            gender = request.form["gender"]
+
+            updated_data = [name,age,major,gender]
+
+            signal = StudentManager().update_student(student_id,updated_data)
+
+            if signal:
+                msg = "Changes saved"
+                student = StudentManager().search_student(id=student_id, name=None)[0]
+            else:
+                msg = "Change failed"
+
+        return render_template('modify_student.html', student=student, msg=msg)
 
     @app.route('/delete', methods=['GET', 'POST'])
     def delete_student():
+        msg = ""
         # Delete student information by id
         if request.method == 'POST':
-            submitted = request.form
-            print(submitted)
-            print(submitted['id'])
-        # delete student from list
-        # Overwrite to file
-        # After that can go back to display, you need use function name for url_for
-        return redirect(url_for('display_students'))
+            id = request.form["id"]
+            signal = StudentManager().delete_students(id)
+
+            if signal:
+                msg = "Delete successfully"
+            else:
+                msg = f"Student(ID:{id}) delete fail"
+
+        students = StudentManager().load_students()
+        
+        return render_template('display_students.html', students=students, msg=msg)
 
 
     @app.route('/display')

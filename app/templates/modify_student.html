@@ -10,18 +10,32 @@
     <div>
         <!-- Your code here -->
         {{ student }}
-        <form action="/modify" method="post">
-            id: <input type="text" name="id" value="{{ student.id }}">
+        <form action="{{ url_for('modify_student') }}" method="post">
+            <input type="hidden" name="id" value="{{ student['ID'] }}">
+            name: <input type="text" name="name" value="{{ student['Name'] }}">
             <br />
-            name: <input type="text" name="name" value="{{ student.name }}">
+            age: <input type="text" name="age" value="{{ student['Age'] }}">
             <br />
-            age: <input type="text" name="age" value="{{ student.age }}">
+            <p>
+                <label for="major">Major:</label>
+                <select id="major" name="major">
+                    <option value="{{ student['Major'] }}">{{ student['Major']}}</option>
+                    <option value="Computer Science">Computer Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Physical">Physical</option>
+                    <option value="Art">Art</option>
+                </select>
+            </p>
             <br />
+            <input type="hidden" name="gender" value="{{ student['Gender'] }}">
             <input type="submit" value="Submit">
 
             <a href="{{ url_for('home') }}"><button type="button">Home</button> </a>
 
         </form>
+        {% if msg %}
+            <p id="msg">{{ msg }}</p>
+        {% endif %}
     </div>
 </body>
 </html>
